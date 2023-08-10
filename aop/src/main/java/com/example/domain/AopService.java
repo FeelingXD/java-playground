@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 public class AopService {
 
   @Encrypt
-  public String encryptAop(String value){
+  public String encryptAop(String value) {
     return value;
   }
+
   @Encrypt(encryptType = EncryptType.DECRYPT)
-  public String decryptAop(String value){
+  public String decryptAop(String value) {
     return value;
   }
 }

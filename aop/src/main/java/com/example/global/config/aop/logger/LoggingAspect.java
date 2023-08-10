@@ -1,11 +1,8 @@
 package com.example.global.config.aop.logger;
 
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -21,12 +18,13 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
   @Before("@annotation(com.example.global.config.aop.logger.CustomLogger)")
-  public void logBeforeExecution(JoinPoint joinPoint){
-    log.warn("start :"+ System.currentTimeMillis());
+  public void logBeforeExecution(JoinPoint joinPoint) {
+    log.warn("start :" + System.currentTimeMillis());
   }
+
   @After("@annotation(com.example.global.config.aop.logger.CustomLogger)")
-  public void logAfterExecution(JoinPoint joinPoint){
-    log.warn("end :"+ System.currentTimeMillis());
+  public void logAfterExecution(JoinPoint joinPoint) {
+    log.warn("end :" + System.currentTimeMillis());
   }
 
 }

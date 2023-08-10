@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Encrypt {
+
   public String secretKey() default "secret";
+
   public EncryptType encryptType() default EncryptType.ENCRYPT;
 }

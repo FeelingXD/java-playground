@@ -19,8 +19,8 @@ public class StringTest {
     }catch (Exception e){
       e.printStackTrace();
     }
-    System.out.println(String.format("length : %d",sbTest.sb.length()));
-    System.out.println(sbTest.sb.toString());
+    System.out.printf("length : %d%n",sbTest.sb.length());
+    System.out.println(sbTest.sb);
       //when
       //then
   }

@@ -3,6 +3,7 @@ plugins {
     id 'application'
 }
 mainClassName="org.example.Main"
+
 run{
     standardInput = System.in
 }

@@ -1,9 +1,12 @@
 package loop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
@@ -11,11 +14,13 @@ import java.util.stream.LongStream;
 public class StreamTest {
 
     @Test
+    @DisplayName("primitive 타입")
     void performance_loop_vs_stream(){
     //given
         // nomal range case
+        log.info("Range case ");
         var start_time=System.currentTimeMillis();
-        var testSize=50_000_000;
+        var testSize=100_000_000_0; // 10억
 
         long sum=0;
         for (int i = 0; i < testSize; i++) {
@@ -31,6 +36,8 @@ public class StreamTest {
         log.info(String.format("intStream duration: %d",System.currentTimeMillis()-start_time));
 
         // array case
+
+        log.info("array Case \n");
         var num_array= new int[testSize];
 
         for(int i=0 ;i<num_array.length;i++){
@@ -44,7 +51,7 @@ public class StreamTest {
             sum+=num_array[i];
         }
         log.info(String.valueOf(sum));
-        log.info(String.valueOf(System.currentTimeMillis()-start_time));
+        log.info(String.valueOf(String.format("for loop performance %d",System.currentTimeMillis()-start_time)));
 
         // performance ArrayStream
         start_time=System.currentTimeMillis();
@@ -59,6 +66,35 @@ public class StreamTest {
         }
 
         log.info(String.format("for each(enhanced for-loop) duration :%d" , System.currentTimeMillis()-start_time));
+    }
+    @Test
+    @DisplayName("Wrapper 타입")
+    void case_box_type(){
 
+        log.info("box type performance test");
+        //for loop
+        List<Integer> numbers=new ArrayList<>();
+        var test_size= 100_000_000; // OOM 문제로 케이스는 1억 최대
+
+        for(int i=0;i<test_size;i++){
+            numbers.add(i);
+        }
+
+        var start_time= System.currentTimeMillis();
+        long sum=0;
+        for(int i=0;i<numbers.size();i++){
+            sum+= numbers.get(i);
+        }
+        log.info(String.format("for loop (box) duration :%d", System.currentTimeMillis()-start_time));
+
+        //Stream
+        start_time =System.currentTimeMillis();
+        sum=numbers.stream().reduce(Integer::sum).get();
+        log.info(String.format("Stream duration :%d", System.currentTimeMillis()-start_time));
+
+        //Stream Parallel
+        start_time =System.currentTimeMillis();
+        sum=numbers.stream().parallel().reduce(Integer::sum).get();
+        log.info(String.format("Stream (parallel) duration : %d" , System.currentTimeMillis()-start_time));
     }
 }

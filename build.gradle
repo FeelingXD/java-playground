@@ -1,9 +1,9 @@
 plugins {
     id 'java'
     id 'application'
+    id "me.champeau.jmh" version "0.7.1"
 }
 mainClassName="org.example.Main"
-
 run{
     standardInput = System.in
 }
@@ -22,14 +22,24 @@ dependencies {
 
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26' // 테스트를 위한 세팅
     testImplementation 'org.projectlombok:lombok:1.18.26' // 테스트를 위한 세팅
-
     implementation 'junit:junit:4.13.1'
+
+    //jmh
+    implementation 'org.openjdk.jmh:jmh-core:1.35'
+    jmhAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'ch.qos.logback:logback-classic:1.2.6'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
+
+jmh {
+    iterations = 3
+    warmupIterations = 3
+    fork = 1
+}
+
 
 
 test {

@@ -37,7 +37,7 @@ public class StreamTest {
 
         // array case
 
-        log.info("array Case \n");
+        log.info("\narray Case \n");
         var num_array= new int[testSize];
 
         for(int i=0 ;i<num_array.length;i++){

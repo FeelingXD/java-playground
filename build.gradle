@@ -22,7 +22,6 @@ dependencies {
 
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26' // 테스트를 위한 세팅
     testImplementation 'org.projectlombok:lombok:1.18.26' // 테스트를 위한 세팅
-    implementation 'junit:junit:4.13.1'
 
     //jmh
     implementation 'org.openjdk.jmh:jmh-core:1.35'
@@ -36,13 +35,13 @@ dependencies {
 
 jmh {
     iterations = 3
-    warmupIterations = 3
     fork = 1
 }
 
 
 
 test {
+    maxHeapSize = "12048m"
     useJUnitPlatform()
 }
 

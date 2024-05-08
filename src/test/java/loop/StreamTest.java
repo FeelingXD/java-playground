@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 @Slf4j
@@ -18,9 +17,9 @@ public class StreamTest {
     void performance_loop_vs_stream(){
     //given
         // nomal range case
-        log.info("Range case ");
+        log.info("## Range case ## ");
         var start_time=System.currentTimeMillis();
-        var testSize=100_000_000_0; // 10억
+        var testSize=1_000_000_000; // 1억
 
         long sum=0;
         for (int i = 0; i < testSize; i++) {
@@ -37,7 +36,7 @@ public class StreamTest {
 
         // array case
 
-        log.info("\narray Case \n");
+        log.info("## array Case ##");
         var num_array= new int[testSize];
 
         for(int i=0 ;i<num_array.length;i++){
@@ -96,5 +95,27 @@ public class StreamTest {
         start_time =System.currentTimeMillis();
         sum=numbers.stream().parallel().reduce(Integer::sum).get();
         log.info(String.format("Stream (parallel) duration : %d" , System.currentTimeMillis()-start_time));
+
+
     }
+    @Test
+    @DisplayName("병렬스트림과 스트림")
+    void ParallelStreamAndStream(){
+        List<Integer> numbers=new ArrayList<>();
+        var test_size= 100_000_000; // OOM 문제로 케이스는 1억 최대
+        for(int i=0;i<test_size;i++){
+            numbers.add(i);
+        }
+        // 병렬 스트림의 경우
+        var start_time =System.currentTimeMillis();
+        numbers.parallelStream().reduce(Integer::sum);
+        log.info(String.format("parallel stream duration : %d", System.currentTimeMillis()-start_time));
+
+        //일반 스트림
+        start_time=System.currentTimeMillis();
+        numbers.stream().reduce(Integer::sum);
+        log.info(String.format("stream duration :%d", System.currentTimeMillis()-start_time));
+    }
+
+
 }
